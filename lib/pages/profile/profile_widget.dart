@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'profile_model.dart';
@@ -126,6 +127,37 @@ class _ProfileWidgetState extends State<ProfileWidget>
                 indent: 24.0,
                 endIndent: 24.0,
                 color: FlutterFlowTheme.of(context).lineColor,
+              ),
+              Container(
+                width: 308.9,
+                height: 66.3,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Edit Profile',
+                      style: FlutterFlowTheme.of(context).bodyMedium,
+                    ),
+                    FlutterFlowIconButton(
+                      borderColor: Colors.transparent,
+                      borderRadius: 30.0,
+                      borderWidth: 1.0,
+                      buttonSize: 30.0,
+                      icon: FaIcon(
+                        FontAwesomeIcons.arrowRight,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        size: 20.0,
+                      ),
+                      onPressed: () async {
+                        context.pushNamed('EditProfile');
+                      },
+                    ),
+                  ],
+                ),
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),

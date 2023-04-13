@@ -215,6 +215,7 @@ class _SigninSignupPageWidgetState extends State<SigninSignupPageWidget> {
                                                   fontSize: 16.0,
                                                   fontWeight: FontWeight.normal,
                                                 ),
+                                            keyboardType: TextInputType.number,
                                             validator: _model
                                                 .emailLoginControllerValidator
                                                 .asValidator(context),
@@ -429,6 +430,49 @@ class _SigninSignupPageWidgetState extends State<SigninSignupPageWidget> {
                                                 width: 1.0,
                                               ),
                                             ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  20.0, 20.0, 20.0, 20.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              InkWell(
+                                                onTap: () async {
+                                                  context
+                                                      .pushNamed('PhoneSignin');
+                                                },
+                                                child: Container(
+                                                  width: 50.0,
+                                                  height: 50.0,
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0xFF090F13),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        blurRadius: 5.0,
+                                                        color:
+                                                            Color(0x3314181B),
+                                                        offset:
+                                                            Offset(0.0, 2.0),
+                                                      )
+                                                    ],
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          0.0, 0.0),
+                                                  child: Icon(
+                                                    Icons.phone_sharp,
+                                                    color: Color(0xFF9797F6),
+                                                    size: 24.0,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
@@ -771,7 +815,7 @@ class _SigninSignupPageWidgetState extends State<SigninSignupPageWidget> {
                                               }
 
                                               context.pushNamedAuth(
-                                                  'AddNumPage', mounted);
+                                                  'create_profile1', mounted);
                                             },
                                             text: 'Create Account',
                                             options: FFButtonOptions(

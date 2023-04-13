@@ -69,14 +69,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, _) =>
-          appStateNotifier.loggedIn ? ProfilepageWidget() : OnboardingWidget(),
+          appStateNotifier.loggedIn ? ProfileWidget() : OnboardingWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => appStateNotifier.loggedIn
-              ? ProfilepageWidget()
-              : OnboardingWidget(),
+          builder: (context, _) =>
+              appStateNotifier.loggedIn ? ProfileWidget() : OnboardingWidget(),
         ),
         FFRoute(
           name: 'SigninSignupPage',
@@ -93,12 +92,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/oTPPage',
           builder: (context, params) => OTPPageWidget(
             mobileNumber: params.getParam('mobileNumber', ParamType.String),
+            user: params.getParam(
+                'user', ParamType.DocumentReference, false, ['users']),
           ),
         ),
         FFRoute(
-          name: 'create_profile',
-          path: '/createProfile',
-          builder: (context, params) => CreateProfileWidget(),
+          name: 'create_profile1',
+          path: '/createProfile1',
+          builder: (context, params) => CreateProfile1Widget(),
         ),
         FFRoute(
           name: 'DUMMYPAGE',
@@ -111,11 +112,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => OnboardingWidget(),
         ),
         FFRoute(
-          name: 'profilepage',
-          path: '/profilepage',
-          builder: (context, params) => ProfilepageWidget(),
-        ),
-        FFRoute(
           name: 'NotificationSettings',
           path: '/notificationSettings',
           builder: (context, params) => NotificationSettingsWidget(),
@@ -126,14 +122,31 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ResetPageWidget(),
         ),
         FFRoute(
+          name: 'Profile',
+          path: '/profile',
+          builder: (context, params) => ProfileWidget(),
+        ),
+        FFRoute(
+          name: 'Signin_OTP',
+          path: '/signinOTP',
+          builder: (context, params) => SigninOTPWidget(
+            mobileNumber: params.getParam('mobileNumber', ParamType.String),
+          ),
+        ),
+        FFRoute(
+          name: 'PhoneSignin',
+          path: '/phoneSignin',
+          builder: (context, params) => PhoneSigninWidget(),
+        ),
+        FFRoute(
           name: 'EditProfile',
           path: '/editProfile',
           builder: (context, params) => EditProfileWidget(),
         ),
         FFRoute(
-          name: 'Profile',
-          path: '/profile',
-          builder: (context, params) => ProfileWidget(),
+          name: 'create_profile2',
+          path: '/createProfile2',
+          builder: (context, params) => CreateProfile2Widget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,

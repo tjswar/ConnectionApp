@@ -1,3 +1,4 @@
+import '/auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -70,8 +71,12 @@ class _DummypageWidgetState extends State<DummypageWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(100.0, 150.0, 0.0, 0.0),
                 child: FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
+                  onPressed: () async {
+                    GoRouter.of(context).prepareAuthEvent();
+                    await signOut();
+                    GoRouter.of(context).clearRedirectLocation();
+
+                    context.goNamedAuth('Onboarding', mounted);
                   },
                   text: 'Logout',
                   options: FFButtonOptions(

@@ -61,13 +61,16 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
             context.pop();
           },
         ),
-        title: Text(
-          'Edit Profile',
-          style: FlutterFlowTheme.of(context).headlineMedium.override(
-                fontFamily: 'Poppins',
-                color: Colors.white,
-                fontSize: 22.0,
-              ),
+        title: Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
+          child: Text(
+            'Edit Profile',
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: 'Poppins',
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  fontSize: 22.0,
+                ),
+          ),
         ),
         actions: [],
         centerTitle: true,
@@ -77,23 +80,21 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 100.0,
-                    height: 100.0,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFDBE2E7),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(2.0, 2.0, 2.0, 2.0),
-                      child: Container(
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 100.0,
+                  height: 100.0,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFDBE2E7),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(2.0, 2.0, 2.0, 2.0),
+                    child: AuthUserStreamWidget(
+                      builder: (context) => Container(
                         width: 90.0,
                         height: 90.0,
                         clipBehavior: Clip.antiAlias,
@@ -101,14 +102,14 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                           shape: BoxShape.circle,
                         ),
                         child: Image.network(
-                          'https://images.unsplash.com/photo-1536164261511-3a17e671d380?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=630&q=80',
+                          currentUserPhoto,
                           fit: BoxFit.fitWidth,
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 16.0),
@@ -116,51 +117,32 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  StreamBuilder<UsersRecord>(
-                    stream: UsersRecord.getDocument(currentUserReference!),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: SizedBox(
-                            width: 50.0,
-                            height: 50.0,
-                            child: CircularProgressIndicator(
-                              color: FlutterFlowTheme.of(context).primary,
-                            ),
-                          ),
-                        );
-                      }
-                      final buttonUsersRecord = snapshot.data!;
-                      return FFButtonWidget(
-                        onPressed: () async {
-                          final usersUpdateData = createUsersRecordData();
-                          await currentUserReference!.update(usersUpdateData);
-                        },
-                        text: 'Change Photo',
-                        options: FFButtonOptions(
-                          width: 130.0,
-                          height: 40.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          textStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Lexend Deca',
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                          elevation: 1.0,
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
-                          ),
-                        ),
-                      );
+                  FFButtonWidget(
+                    onPressed: () {
+                      print('Button pressed ...');
                     },
+                    text: 'Change Photo',
+                    options: FFButtonOptions(
+                      width: 130.0,
+                      height: 40.0,
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      iconPadding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      textStyle:
+                          FlutterFlowTheme.of(context).bodyMedium.override(
+                                fontFamily: 'Lexend Deca',
+                                color: FlutterFlowTheme.of(context).primary,
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.normal,
+                              ),
+                      elevation: 1.0,
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1.0,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -266,14 +248,11 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                 child: FFButtonWidget(
                   onPressed: () async {
-                    final usersUpdateData = {
-                      ...createUsersRecordData(
-                        displayName: currentUserDisplayName,
-                        userAge:
-                            valueOrDefault(currentUserDocument?.userAge, 0),
-                      ),
-                      'photo_url': FieldValue.delete(),
-                    };
+                    final usersUpdateData = createUsersRecordData(
+                      displayName: _model.yourNameController.text,
+                      photoUrl: currentUserPhoto,
+                      userAge: int.tryParse(_model.ageController.text),
+                    );
                     await currentUserReference!.update(usersUpdateData);
                     context.pop();
                   },

@@ -1,4 +1,5 @@
 import '/auth/auth_util.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_timer.dart';
@@ -6,38 +7,52 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'o_t_p_page_model.dart';
-export 'o_t_p_page_model.dart';
+import 'signin_o_t_p_model.dart';
+export 'signin_o_t_p_model.dart';
 
-class OTPPageWidget extends StatefulWidget {
-  const OTPPageWidget({
+class SigninOTPWidget extends StatefulWidget {
+  const SigninOTPWidget({
     Key? key,
     this.mobileNumber,
-    this.user,
   }) : super(key: key);
 
   final String? mobileNumber;
-  final DocumentReference? user;
 
   @override
-  _OTPPageWidgetState createState() => _OTPPageWidgetState();
+  _SigninOTPWidgetState createState() => _SigninOTPWidgetState();
 }
 
-class _OTPPageWidgetState extends State<OTPPageWidget> {
-  late OTPPageModel _model;
+class _SigninOTPWidgetState extends State<SigninOTPWidget>
+    with TickerProviderStateMixin {
+  late SigninOTPModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
 
+  final animationsMap = {
+    'textOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+  };
+
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => OTPPageModel());
+    _model = createModel(context, () => SigninOTPModel());
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -196,6 +211,16 @@ class _OTPPageWidgetState extends State<OTPPageWidget> {
                       ),
                     ),
                   ),
+                  if (_model.timerMilliseconds == 0)
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 40.0, 0.0),
+                      child: Text(
+                        'Resend Otp',
+                        style: FlutterFlowTheme.of(context).bodyMedium,
+                      ).animateOnPageLoad(
+                          animationsMap['textOnPageLoadAnimation']!),
+                    ),
                 ],
               ),
               Padding(
@@ -220,7 +245,7 @@ class _OTPPageWidgetState extends State<OTPPageWidget> {
                       return;
                     }
 
-                    context.goNamedAuth('create_profile2', mounted);
+                    context.goNamedAuth('Profile', mounted);
                   },
                   text: 'Continue',
                   options: FFButtonOptions(

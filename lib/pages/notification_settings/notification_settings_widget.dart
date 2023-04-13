@@ -54,7 +54,7 @@ class _NotificationSettingsWidgetState
             size: 30.0,
           ),
           onPressed: () async {
-            context.pushNamed('profilepage');
+            Navigator.pop(context);
           },
         ),
         title: Text(
