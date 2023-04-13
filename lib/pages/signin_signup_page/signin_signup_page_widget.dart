@@ -443,8 +443,8 @@ class _SigninSignupPageWidgetState extends State<SigninSignupPageWidget> {
                                             children: [
                                               InkWell(
                                                 onTap: () async {
-                                                  context
-                                                      .pushNamed('PhoneSignin');
+                                                  context.pushNamed(
+                                                      'SignInNumPage');
                                                 },
                                                 child: Container(
                                                   width: 50.0,
@@ -815,7 +815,7 @@ class _SigninSignupPageWidgetState extends State<SigninSignupPageWidget> {
                                               }
 
                                               context.pushNamedAuth(
-                                                  'create_profile1', mounted);
+                                                  'SignupNumPage', mounted);
                                             },
                                             text: 'Create Account',
                                             options: FFButtonOptions(

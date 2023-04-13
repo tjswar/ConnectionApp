@@ -83,9 +83,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => SigninSignupPageWidget(),
         ),
         FFRoute(
-          name: 'AddNumPage',
-          path: '/addNumPage',
-          builder: (context, params) => AddNumPageWidget(),
+          name: 'SignupNumPage',
+          path: '/signupNumPage',
+          builder: (context, params) => SignupNumPageWidget(),
         ),
         FFRoute(
           name: 'OTP_page',
@@ -95,11 +95,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             user: params.getParam(
                 'user', ParamType.DocumentReference, false, ['users']),
           ),
-        ),
-        FFRoute(
-          name: 'create_profile1',
-          path: '/createProfile1',
-          builder: (context, params) => CreateProfile1Widget(),
         ),
         FFRoute(
           name: 'DUMMYPAGE',
@@ -134,19 +129,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           ),
         ),
         FFRoute(
-          name: 'PhoneSignin',
-          path: '/phoneSignin',
-          builder: (context, params) => PhoneSigninWidget(),
-        ),
-        FFRoute(
           name: 'EditProfile',
           path: '/editProfile',
           builder: (context, params) => EditProfileWidget(),
         ),
         FFRoute(
-          name: 'create_profile2',
-          path: '/createProfile2',
-          builder: (context, params) => CreateProfile2Widget(),
+          name: 'create_profile',
+          path: '/createProfile',
+          builder: (context, params) => CreateProfileWidget(),
+        ),
+        FFRoute(
+          name: 'SignInNumPage',
+          path: '/signInNumPage',
+          builder: (context, params) => SignInNumPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,

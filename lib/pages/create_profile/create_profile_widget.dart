@@ -1,4 +1,5 @@
 import '/auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -6,23 +7,24 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
-import 'create_profile1_model.dart';
-export 'create_profile1_model.dart';
+import 'create_profile_model.dart';
+export 'create_profile_model.dart';
 
-class CreateProfile1Widget extends StatefulWidget {
-  const CreateProfile1Widget({Key? key}) : super(key: key);
+class CreateProfileWidget extends StatefulWidget {
+  const CreateProfileWidget({Key? key}) : super(key: key);
 
   @override
-  _CreateProfile1WidgetState createState() => _CreateProfile1WidgetState();
+  _CreateProfileWidgetState createState() => _CreateProfileWidgetState();
 }
 
-class _CreateProfile1WidgetState extends State<CreateProfile1Widget> {
-  late CreateProfile1Model _model;
+class _CreateProfileWidgetState extends State<CreateProfileWidget> {
+  late CreateProfileModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
@@ -30,10 +32,11 @@ class _CreateProfile1WidgetState extends State<CreateProfile1Widget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => CreateProfile1Model());
+    _model = createModel(context, () => CreateProfileModel());
 
     _model.fullNameController ??= TextEditingController();
-    _model.phoneNumberController ??= TextEditingController();
+    _model.phoneNumberController ??=
+        TextEditingController(text: currentPhoneNumber);
     _model.ageController ??= TextEditingController();
   }
 
@@ -87,8 +90,8 @@ class _CreateProfile1WidgetState extends State<CreateProfile1Widget> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                   child: Container(
-                    width: 113.0,
-                    height: 113.0,
+                    width: 128.6,
+                    height: 128.6,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
                       shape: BoxShape.circle,
@@ -96,24 +99,23 @@ class _CreateProfile1WidgetState extends State<CreateProfile1Widget> {
                         color: FlutterFlowTheme.of(context).secondaryText,
                       ),
                     ),
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+                    child: Align(
+                      alignment: AlignmentDirectional(1.0, 0.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Container(
-                            width: 100.0,
-                            height: 100.0,
+                            width: 120.0,
+                            height: 120.0,
                             clipBehavior: Clip.antiAlias,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                             ),
                             child: Image.network(
                               _model.uploadedFileUrl,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fill,
                             ),
                           ),
                         ],
@@ -325,65 +327,69 @@ class _CreateProfile1WidgetState extends State<CreateProfile1Widget> {
                           ),
                         ),
                         Expanded(
-                          child: TextFormField(
-                            controller: _model.phoneNumberController,
-                            autofocus: true,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              hintText: 'Enter your number',
-                              hintStyle: FlutterFlowTheme.of(context).bodySmall,
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1.0,
+                          child: AuthUserStreamWidget(
+                            builder: (context) => TextFormField(
+                              controller: _model.phoneNumberController,
+                              autofocus: true,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                hintText: 'Enter your number',
+                                hintStyle:
+                                    FlutterFlowTheme.of(context).bodySmall,
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
                                 ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                errorBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                focusedErrorBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
                                 ),
                               ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1.0,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              errorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1.0,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              focusedErrorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1.0,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Outfit',
+                                  ),
+                              textAlign: TextAlign.center,
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                      signed: true, decimal: true),
+                              validator: _model.phoneNumberControllerValidator
+                                  .asValidator(context),
+                              inputFormatters: [_model.phoneNumberMask],
                             ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Outfit',
-                                ),
-                            textAlign: TextAlign.center,
-                            keyboardType: const TextInputType.numberWithOptions(
-                                signed: true, decimal: true),
-                            validator: _model.phoneNumberControllerValidator
-                                .asValidator(context),
-                            inputFormatters: [_model.phoneNumberMask],
                           ),
                         ),
                       ],
@@ -467,6 +473,7 @@ class _CreateProfile1WidgetState extends State<CreateProfile1Widget> {
                             keyboardType: TextInputType.number,
                             validator: _model.ageControllerValidator
                                 .asValidator(context),
+                            inputFormatters: [_model.ageMask],
                           ),
                         ),
                       ],
@@ -513,7 +520,7 @@ class _CreateProfile1WidgetState extends State<CreateProfile1Widget> {
                           searchHintTextStyle: FlutterFlowTheme.of(context)
                               .bodyLarge
                               .override(
-                                fontFamily: '',
+                                fontFamily: 'Outfit',
                                 color:
                                     FlutterFlowTheme.of(context).secondaryText,
                               ),
@@ -537,52 +544,59 @@ class _CreateProfile1WidgetState extends State<CreateProfile1Widget> {
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
-                  child: FFButtonWidget(
-                    onPressed: () async {
-                      final phoneNumberVal = _model.phoneNumberController.text;
-                      if (phoneNumberVal == null ||
-                          phoneNumberVal.isEmpty ||
-                          !phoneNumberVal.startsWith('+')) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                                'Phone Number is required and has to start with +.'),
+                  child: StreamBuilder<UsersRecord>(
+                    stream: UsersRecord.getDocument(currentUserReference!),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: CircularProgressIndicator(
+                              color: FlutterFlowTheme.of(context).primary,
+                            ),
                           ),
                         );
-                        return;
                       }
-                      await beginPhoneAuth(
-                        context: context,
-                        phoneNumber: phoneNumberVal,
-                        onCodeSent: () async {
-                          context.goNamedAuth(
-                            'OTP_page',
-                            mounted,
-                            ignoreRedirect: true,
+                      final buttonUsersRecord = snapshot.data!;
+                      return FFButtonWidget(
+                        onPressed: () async {
+                          final usersUpdateData = createUsersRecordData(
+                            displayName: _model.fullNameController.text,
+                            userAge: int.tryParse(_model.ageController.text),
+                            gender: _model.genderValue,
+                            photoUrl: _model.uploadedFileUrl,
+                            email: currentUserEmail,
+                            phoneNumber: _model.phoneNumberController.text,
                           );
+                          await buttonUsersRecord.reference
+                              .update(usersUpdateData);
+
+                          context.pushNamed('DUMMYPAGE');
                         },
+                        text: 'Submit',
+                        options: FFButtonOptions(
+                          width: 130.0,
+                          height: 40.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: Color(0xFF9797F6),
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                  ),
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
                       );
                     },
-                    text: 'Verify number',
-                    options: FFButtonOptions(
-                      width: 130.0,
-                      height: 40.0,
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: FlutterFlowTheme.of(context).warning,
-                      textStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                                fontFamily: 'Poppins',
-                                color: Colors.white,
-                              ),
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
                   ),
                 ),
               ],

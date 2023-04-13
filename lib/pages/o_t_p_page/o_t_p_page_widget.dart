@@ -220,7 +220,7 @@ class _OTPPageWidgetState extends State<OTPPageWidget> {
                       return;
                     }
 
-                    context.goNamedAuth('create_profile2', mounted);
+                    context.goNamedAuth('create_profile', mounted);
                   },
                   text: 'Continue',
                   options: FFButtonOptions(

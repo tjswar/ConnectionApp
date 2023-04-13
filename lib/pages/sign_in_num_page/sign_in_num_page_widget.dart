@@ -6,20 +6,21 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'add_num_page_model.dart';
-export 'add_num_page_model.dart';
+import 'sign_in_num_page_model.dart';
+export 'sign_in_num_page_model.dart';
 
-class AddNumPageWidget extends StatefulWidget {
-  const AddNumPageWidget({Key? key}) : super(key: key);
+class SignInNumPageWidget extends StatefulWidget {
+  const SignInNumPageWidget({Key? key}) : super(key: key);
 
   @override
-  _AddNumPageWidgetState createState() => _AddNumPageWidgetState();
+  _SignInNumPageWidgetState createState() => _SignInNumPageWidgetState();
 }
 
-class _AddNumPageWidgetState extends State<AddNumPageWidget> {
-  late AddNumPageModel _model;
+class _SignInNumPageWidgetState extends State<SignInNumPageWidget> {
+  late SignInNumPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
@@ -27,7 +28,30 @@ class _AddNumPageWidgetState extends State<AddNumPageWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => AddNumPageModel());
+    _model = createModel(context, () => SignInNumPageModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      GoRouter.of(context).prepareAuthEvent();
+      final smsCodeVal = currentPhoneNumber;
+      if (smsCodeVal == null || smsCodeVal.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Enter SMS verification code.'),
+          ),
+        );
+        return;
+      }
+      final phoneVerifiedUser = await verifySmsCode(
+        context: context,
+        smsCode: smsCodeVal,
+      );
+      if (phoneVerifiedUser == null) {
+        return;
+      }
+
+      context.pushNamedAuth('Profile', mounted);
+    });
 
     _model.textController1 ??= TextEditingController();
     _model.textController2 ??= TextEditingController();
@@ -362,7 +386,7 @@ class _AddNumPageWidgetState extends State<AddNumPageWidget> {
                         phoneNumber: phoneNumberVal,
                         onCodeSent: () async {
                           context.goNamedAuth(
-                            'OTP_page',
+                            'Signin_OTP',
                             mounted,
                             queryParams: {
                               'mobileNumber': serializeParam(
