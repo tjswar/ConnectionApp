@@ -375,7 +375,7 @@ class _SigninSignupPageWidgetState extends State<SigninSignupPageWidget> {
                                               if (currentUserEmailVerified ==
                                                   true) {
                                                 context.pushNamedAuth(
-                                                    'profilepage', mounted);
+                                                    'Profile', mounted);
                                               } else {
                                                 await showModalBottomSheet(
                                                   isScrollControlled: true,

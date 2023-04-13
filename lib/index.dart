@@ -12,3 +12,4 @@ export '/pages/notification_settings/notification_settings_widget.dart'
     show NotificationSettingsWidget;
 export '/pages/reset_page/reset_page_widget.dart' show ResetPageWidget;
 export '/pages/edit_profile/edit_profile_widget.dart' show EditProfileWidget;
+export '/pages/profile/profile_widget.dart' show ProfileWidget;

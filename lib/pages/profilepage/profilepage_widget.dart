@@ -139,8 +139,8 @@ class _ProfilepageWidgetState extends State<ProfilepageWidget> {
                               color: Color(0xFF95A1AC),
                               size: 20.0,
                             ),
-                            onPressed: () async {
-                              context.pushNamed('EditProfile');
+                            onPressed: () {
+                              print('IconButton pressed ...');
                             },
                           ),
                         ],
